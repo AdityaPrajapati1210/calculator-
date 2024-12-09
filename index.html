@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    /* Add your custom styles here */
+    body{
+      
+      background-image: url(https://c4.wallpaperflare.com/wallpaper/77/440/973/cube-eevee-blender-neon-neon-lights-hd-wallpaper-preview.jpg);
+      background-size: cover;
+      background-repeat: no-repeat; 
+    }
+    .container {
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      }
+    .cal {
+      background-image: url(https://img.freepik.com/premium-photo/creative-linear-blue-background-bg-landing-page-digital-design-concept_670147-34064.jpg);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 3px 3px 50px rgba(206, 35, 236, 0.781);
+    }
+    .input {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    button {
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzQTJQjkLDfqbz148ICtGSnOVJq4ozAT2FRw&s);
+    }
+    /* button:hover {
+      background-color: chocolate;
+    } */
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="cal">
+      <h1 class="input" id="input">0</h1>
+      <div>
+        <button onclick="handleButtonClick('C')">C</button>
+        <button onclick="handleButtonClick('<')">&lt;</button>
+        <button onclick="handleButtonClick('%')">%</button>
+        <button onclick="handleButtonClick('/')">/</button>
+      </div>
+      <div>
+        <button onclick="handleButtonClick('7')">7</button>
+        <button onclick="handleButtonClick('8')">8</button>
+        <button onclick="handleButtonClick('9')">9</button>
+        <button onclick="handleButtonClick('*')">*</button>
+      </div>
+      <div>
+        <button onclick="handleButtonClick('4')">4</button>
+        <button onclick="handleButtonClick('5')">5</button>
+        <button onclick="handleButtonClick('6')">6</button>
+        <button onclick="handleButtonClick('-')">-</button>
+      </div>
+      <div>
+        <button onclick="handleButtonClick('1')">1</button>
+        <button onclick="handleButtonClick('2')">2</button>
+        <button onclick="handleButtonClick('3')">3</button>
+        <button onclick="handleButtonClick('+')">+</button>
+      </div>
+      <div>
+        <button onclick="handleButtonClick('0')">0</button>
+        <button onclick="handleButtonClick('00')">00</button>
+        <button onclick="handleButtonClick('.')">.</button>
+        <button onclick="handleButtonClick('=')">=</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let input = '';
+    
+    const calculateResult = (input) => {
+      let result = 0;
+      try {
+        const operators = ['+', '-', '*', '/'];
+        let operator = null;
+        
+        for (let i = 0; i < input.length; i++) {
+          if (operators.includes(input[i])) {
+            operator = input[i];
+            break;
+          }
+        }
+        
+        if (!operator) {
+          document.getElementById('input').textContent = parseFloat(input).toString();
+          return;
+        }
+
+        const [operand1, operand2] = input.split(operator).map(parseFloat);
+
+        switch (operator) {
+          case '+':
+            result = operand1 + operand2;
+            break;
+          case '-':
+            result = operand1 - operand2;
+            break;
+          case '*':
+            result = operand1 * operand2;
+            break;
+          case '/':
+            result = operand1 / operand2;
+            break;
+          default:
+            throw new Error('Invalid operator');
+        }
+        
+        document.getElementById('input').textContent = result.toString();
+      } catch (e) {
+        document.getElementById('input').textContent = 'Error';
+      }
+    };
+
+    const handleButtonClick = (value) => {
+      if (value === 'C') {
+        input = '';
+        document.getElementById('input').textContent = '0';
+      } else if (value === '<') {
+        input = input.slice(0, -1);
+        document.getElementById('input').textContent = input || '0';
+      } else if (value === '=') {
+        calculateResult(input);
+      } else {
+        input += value;
+        document.getElementById('input').textContent = input;
+      }
+    };
+  </script>
+
+</body>
+</html>
